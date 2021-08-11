@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 import dayjs from 'dayjs';
 import { isNil } from 'lodash-es';
 
-import { InitCoupons } from '../constants';
+import { InitCoupons, QiXiCoupons } from '../constants';
 import { ICoupon, ICouponsItemPrams, ICouponsStatus, ILog, IOperationType } from '../typings';
 
 const integer = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
@@ -92,13 +92,15 @@ export const setCouponsData = (item: ICouponsItemPrams) => {
 /** 获取电子券数据 */
 export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
   let coupons = Taro.getStorageSync('coupons');
-
   let change = false;
+
+  // 空数据时，初始化数据
   if (!Array.isArray(coupons) || coupons.length === 0) {
     coupons = InitCoupons;
     change = true;
   }
 
+  // 更新过期数据
   coupons.forEach((item) => {
     if (item.status === ICouponsStatus.ON && dayjs(item.endTime).valueOf() < dayjs().valueOf()) {
       item.status = ICouponsStatus.OFF;
@@ -111,6 +113,17 @@ export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
       change = true;
     }
   })
+
+  // 更新节日数据 TODO: 增加其它节日
+  if (dayjs().startOf('day').valueOf() === dayjs('2021-08-14').valueOf()) {
+    // id为创建时间
+    const needFlag =
+      coupons.findIndex((item) => dayjs(item.id).startOf('day').valueOf() === dayjs('2021-08-14').valueOf() && item.tag !== '新人礼') === -1;
+
+    if (needFlag) {
+      coupons = coupons.concat(QiXiCoupons)
+    }
+  }
 
   if (change) {
     Taro.setStorage({

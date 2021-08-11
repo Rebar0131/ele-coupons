@@ -100,4 +100,15 @@
     color: white;
     border: none;
   }
+  .empty-block {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #888;
+    background-color: #f7e3e6;
+    border-radius: 12px;
+  }
 }

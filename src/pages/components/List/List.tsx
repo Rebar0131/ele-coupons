@@ -48,23 +48,25 @@ const List: FC = () => {
         <View className={tabClassName(ICouponsStatus.ON)} onClick={handleSwitchTab}>已生效</View>
         <View className={tabClassName(ICouponsStatus.OFF)} onClick={handleSwitchTab}>已失效</View>
       </View>
-      {/* {!openDetail && !openAdd && ( */}
-        <View className={`${prefixClass}__content`}>
-          <View className={`${prefixClass}__list`}>
-            {getCouponsData(tab)?.map((item) => (
-              <View key={item.id} className={couponsClassName(item.status)} onClick={() => handleClick(item)}>
-                {item?.tag && <View className={`${prefixClass}__item-tag`}>{item.tag}</View>}
-                <View className={`${prefixClass}__item-name`}>{item.name}</View>
-                <View className={`${prefixClass}__item-desc`}>{item.desc}</View>
-                <View className={`${prefixClass}__item-text`}>
-                  <View>截至日期：{dayjs(item.endTime).format('YYYY-MM-DD')}</View>
-                  <View>剩余次数：{item.count}/{item.amount}</View>
-                </View>
+      <View className={`${prefixClass}__content`}>
+        <View className={`${prefixClass}__list`}>
+          {getCouponsData(tab)?.length > 0 ? getCouponsData(tab)?.map((item) => (
+            <View key={item.id} className={couponsClassName(item.status)} onClick={() => handleClick(item)}>
+              {item?.tag && <View className={`${prefixClass}__item-tag`}>{item.tag}</View>}
+              <View className={`${prefixClass}__item-name`}>{item.name}</View>
+              {item.desc && <View className={`${prefixClass}__item-desc`}>{item.desc}</View>}
+              <View className={`${prefixClass}__item-text`}>
+                <View>截至日期：{dayjs(item.endTime).format('YYYY-MM-DD')}</View>
+                <View>剩余次数：{item.count}/{item.amount}</View>
               </View>
-            ))}
-          </View>
+            </View>
+          )) : (
+            <View className='empty-block'>
+              暂无数据哦^ ^
+            </View>
+          )}
         </View>
-      {/* )} */}
+      </View>
       {tab === ICouponsStatus.ON && (
         <View className={`${prefixClass}__add`}>
           <Button type='primary' className={`${prefixClass}__add-btn`} onClick={openAddPage}>
