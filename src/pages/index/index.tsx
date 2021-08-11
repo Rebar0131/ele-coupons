@@ -13,7 +13,13 @@ const Index: FC = () => {
 
   setTimeout(() => {
     setLoading(false);
-  }, 5000)
+  }, 4100)
+
+  console.log('To 燕程:')
+  console.log('    七夕快乐哟~ ')
+  console.log('       by: Rebar')
+
+  console.log('仓库地址：https://github.com/Rebar0131/ele-coupons.git')
 
   return (
     <View className='index'>

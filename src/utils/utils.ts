@@ -1,47 +1,46 @@
 import Taro from '@tarojs/taro';
 import dayjs from 'dayjs';
+import { isNil } from 'lodash-es';
 
-export enum ICouponsStatus {
-  /** 生效 */
-  ON = 1,
-  /** 失效/作废 */
-  OFF = 2,
-}
-
-export interface ICouponsItemPrams {
-  id?: number;
-  name: string;
-  startTime: string;
-  endTime: string;
-  status?: ICouponsStatus;
-  tag?: string;
-  desc?: string;
-  count: number;
-  amount?: number;
-}
-
-export interface ICouponsItem {
-  id: number;
-  name: string;
-  startTime: string;
-  endTime: string;
-  status: ICouponsStatus;
-  tag?: string;
-  desc?: string;
-  count: number;
-  amount: number;
-  log?: string[];
-}
+import { InitCoupons } from '../constants';
+import { ICoupon, ICouponsItemPrams, ICouponsStatus, ILog, IOperationType } from '../typings';
 
 const integer = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
 
-export const updateCouponsData = (id: number, data: ICouponsItem) => {
-  const coupons: ICouponsItem[] = Taro.getStorageSync('coupons') || [];
+export const updateCouponsData = (id: number, op: IOperationType) => {
+  const coupons: ICoupon[] = Taro.getStorageSync('coupons') || [];
   const index = coupons?.findIndex(item => item.id === id)
 
-  if(index > -1) {
-    coupons[index] = data;
+  if (index === -1) {
+    throw Error('找不到操作数据')
   }
+  const newCoupon = {
+    ...coupons[index],
+  }
+  switch (op) {
+    case IOperationType.CANCEL:
+      newCoupon.status = ICouponsStatus.OFF;
+      break;
+    case IOperationType.USAGE:
+      if (dayjs() < dayjs(newCoupon.startTime)) {
+        throw Error('还未生效, 不能使用哦')
+      }
+      newCoupon.count--;
+      if (newCoupon.count === 0) {
+        newCoupon.status = ICouponsStatus.OFF;
+      }
+      break;
+    default:
+      break;
+  }
+  // 兼容历史数据
+  newCoupon.logs = newCoupon.logs || [];
+  newCoupon.logs.push({
+    time: dayjs(),
+    type: op,
+  })
+  coupons[index] = newCoupon;
+
   Taro.setStorage({
     key: 'coupons',
     data: coupons,
@@ -50,23 +49,23 @@ export const updateCouponsData = (id: number, data: ICouponsItem) => {
 
 export const setCouponsData = (item: ICouponsItemPrams) => {
   let coupons = Taro.getStorageSync('coupons') || [];
-  console.log('item', item)
+
   if (!Array.isArray(coupons)) {
     coupons = [];
   }
-  if(!item.name) {
+  if (!item.name) {
     throw Error('请输入名称')
   }
-  if(!item.startTime || !item.endTime) {
+  if (!item.startTime || !item.endTime) {
     throw Error('请输入生效日期')
   }
-  if(!item.count) {
+  if (!item.count) {
     throw Error('请输入数量')
   }
-  if(item.count && !integer.test(String(item.count))) {
+  if (item.count && !integer.test(String(item.count))) {
     throw Error('数量请输入正整数')
   }
-  if(item.tag && item.tag?.length > 4) {
+  if (item.tag && item.tag?.length > 4) {
     throw Error('便签字数仅支持4位')
   }
   coupons.push({
@@ -78,28 +77,37 @@ export const setCouponsData = (item: ICouponsItemPrams) => {
     endTime: item.endTime,
     tag: item.tag,
     desc: item.desc,
-    status: item.status || 1,
-    log: [`${dayjs().format('YYYY-MM-DD HH:mm')} 创建`]
+    status: ICouponsStatus.ON,
+    logs: [{
+      time: dayjs(),
+      type: IOperationType.CREATE,
+    }]
   })
   Taro.setStorage({
     key: 'coupons',
     data: coupons,
   })
 }
-export const getCouponsData = (status?: ICouponsStatus): ICouponsItem[] => {
-  const coupons = Taro.getStorageSync('coupons') || [];
 
-  if (!Array.isArray(coupons)) {
-    return [];
-  }
+/** 获取电子券数据 */
+export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
+  let coupons = Taro.getStorageSync('coupons');
+
   let change = false;
+  if (!Array.isArray(coupons) || coupons.length === 0) {
+    coupons = InitCoupons;
+    change = true;
+  }
 
   coupons.forEach((item) => {
-    if (item.status === 1 && dayjs(item.endTime).valueOf() < dayjs().valueOf()) {
-      item.status = 2;
-      const log = item.log || [];
-      log.push(`${dayjs(item.endTime).format('YYYY-MM-DD HH:mm')} 失效`)
-      item.log = log;
+    if (item.status === ICouponsStatus.ON && dayjs(item.endTime).valueOf() < dayjs().valueOf()) {
+      item.status = ICouponsStatus.OFF;
+      const log: ILog[] = item.log || [];
+      log.push({
+        time: dayjs(item.endTime),
+        type: IOperationType.PAST,
+      })
+      item.logs = log;
       change = true;
     }
   })
@@ -110,6 +118,5 @@ export const getCouponsData = (status?: ICouponsStatus): ICouponsItem[] => {
       data: coupons,
     })
   }
-
-  return status ? coupons?.filter(item => item.status === status)?.reverse() : coupons?.reverse();
+  return !isNil(status) ? coupons?.filter(item => item.status === status)?.reverse() : coupons?.reverse();
 }

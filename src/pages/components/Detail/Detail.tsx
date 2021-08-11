@@ -1,17 +1,19 @@
 import Taro from '@tarojs/taro';
-import dayjs from 'dayjs';
 import { Button, Text, View } from "@tarojs/components";
 import { FC, useMemo, useState } from "react";
+import dayjs from 'dayjs';
 
+import { OperationName } from '../../../constants';
+import { ICoupon, ICouponsStatus, IOperationType } from '../../../typings';
 import Modal from '../../../components/Modal/Modal';
 import PageHeader from "../../../components/PageHeader/PageHeader";
-import { ICouponsItem, updateCouponsData } from "../../../utils/utils";
+import { updateCouponsData } from "../../../utils/utils";
 
 import './Detail.scss';
 
 export interface IDetailProps {
   opened: boolean;
-  item: ICouponsItem;
+  item: ICoupon;
   onCancel: () => void;
 }
 
@@ -20,19 +22,11 @@ const CouponsDetail: FC<IDetailProps> = (props: IDetailProps) => {
   const { opened, item, onCancel } = props;
   const [openModal, setOpenModal] = useState(false);
   const [openDelModal, setOpenDelModal] = useState(false);
-  const del = useMemo(() => item?.status === 2 ? 'delete' : '', [item])
+  const del = useMemo(() => item?.status === ICouponsStatus.OFF ? 'delete' : '', [item])
 
   const handleConfirm = () => {
-    console.log('handleConfirm')
-    const log = item.log || [];
-    log.push(`${dayjs().format('YYYY-MM-DD HH:mm')} 使用`)
-
     try {
-      updateCouponsData(item.id, {
-        ...item,
-        count: item.count - 1,
-        log,
-      })
+      updateCouponsData(item.id, IOperationType.USAGE)
     } catch (error) {
       return Taro.showToast({
         title: error.message,
@@ -44,15 +38,8 @@ const CouponsDetail: FC<IDetailProps> = (props: IDetailProps) => {
   }
 
   const handleDelete = () => {
-    const log = item.log || [];
-    log.push(`${dayjs().format('YYYY-MM-DD HH:mm')} 作废`)
-
     try {
-      updateCouponsData(item.id, {
-        ...item,
-        status: 2,
-        log,
-      })
+      updateCouponsData(item.id, IOperationType.CANCEL)
     } catch (error) {
       return Taro.showToast({
         title: error.message,
@@ -72,10 +59,6 @@ const CouponsDetail: FC<IDetailProps> = (props: IDetailProps) => {
     <View className={`${prefixClass}__content ${prefixClass}--${del}`}>
       <View className={`${prefixClass}__header`}>
         <View className={`${prefixClass}__att`}>
-          <Text className={`${prefixClass}__att-name`}>券名：</Text>
-          {item.name}
-        </View>
-        <View className={`${prefixClass}__att`}>
           <Text className={`${prefixClass}__att-name`}>生效日期：</Text>
           {item.startTime}<Text> ~ </Text>{item.endTime}
         </View>
@@ -94,17 +77,17 @@ const CouponsDetail: FC<IDetailProps> = (props: IDetailProps) => {
         </View>
       </View>
       <View className={`${prefixClass}__log`}>
-        {item?.log?.reverse()?.map((str, index) => (
+        {item?.logs?.reverse()?.map((log, index) => (
           <View key={index} className={`${prefixClass}__log-item`}>
-            {str}
+            {`${dayjs(log.time).format('YYYY-MM-DD HH:mm')} ${OperationName[log.type]}`}
           </View>
         ))}
       </View>
     </View>
-    {item.status === 1 && (
+    {item.status === ICouponsStatus.ON && (
       <View className={`${prefixClass}__footer`}>
         <Button className={`${prefixClass}__footer-btn`} onClick={() => setOpenDelModal(true)}>作废</Button>
-        <Button style={{ marginLeft: '12px' }} className={`${prefixClass}__footer-btn`} type='primary' onClick={() => setOpenModal(true)}>确定</Button>
+        <Button style={{ marginLeft: '12px' }} className={`${prefixClass}__footer-btn`} type='primary' onClick={() => setOpenModal(true)}>使用</Button>
       </View>
     )}
     <Modal opened={openModal} onCancel={() => setOpenModal(false)} onConfirm={handleConfirm}>

@@ -16,9 +16,8 @@ export interface IAddProps {
 const prefixClass = "coupons-add";
 const AddComponents: FC<IAddProps> = (props: IAddProps) => {
   const { opened, onCancel } = props;
-  console.log('opened', opened)
   const [startTime, setStartTime] = useState(dayjs().format("YYYY-MM-DD"));
-  const [endTime, setEndTime] = useState(dayjs().add(1, 'years').format("YYYY-MM-DD"));
+  const [endTime, setEndTime] = useState(dayjs().add(6, 'months').format("YYYY-MM-DD"));
   const [name, setName] = useState('');
   const [text, setText] = useState('');
   const [tag, setTag] = useState('');
@@ -29,21 +28,17 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
   }, [opened])
 
   const handleNameChange = (e: any) => {
-    console.log('name', e)
     setName(e?.detail?.value)
   }
   const handleDateChange = (e: any) => {
-    console.log('time', e)
     setStartTime(e?.detail?.value);
   }
 
   const handleEndDateChange = (e: any) => {
-    console.log('time', e)
     setEndTime(e?.detail?.value);
   }
 
   const handleTagChange = (e: any) => {
-    console.log('name', e)
     setTag(e?.detail?.value)
   }
 
@@ -65,8 +60,7 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
     setEndTime(dayjs().add(1, 'years').format("YYYY-MM-DD"))
   }
 
-  const handleConfirm = (e: any) => {
-    console.log('handleConfirm')
+  const handleConfirm = () => {
     try {
       setCouponsData({
         name,
@@ -75,8 +69,6 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
         desc: text,
         tag,
         count: count || 0,
-        amount: count || 0,
-        status: 1,
       })
     } catch (error) {
       return Taro.showToast({
@@ -92,7 +84,7 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
   }
   console.log('endTime', endTime)
   return <View className={prefixClass}>
-    <PageHeader title='新增电子券' backEvent={onCancel} />
+    <PageHeader title='新增服务' backEvent={onCancel} />
     <View className={`${prefixClass}__content`}>
       <View className={`${prefixClass}__header`}>
         <View className={`${prefixClass}__att`}>
