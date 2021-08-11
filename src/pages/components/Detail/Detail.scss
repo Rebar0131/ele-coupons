@@ -1,0 +1,97 @@
+.coupons-detail {
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  &--delete {
+    opacity: 0.4;
+  }
+  &__content {
+    height: calc(100% - 230px);
+    padding: 28px;
+    overflow-y: scroll;
+  }
+  &__header {
+    padding: 28px;
+    background-color: rgb(250, 211, 214);
+    border-radius: 8px;
+  }
+  &__att {
+    display: flex;
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #666;
+
+    &-name {
+      flex: 0 0 200px;
+      color: #333;
+    }
+  }
+  &__count {
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 68px;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: rgb(231, 132, 139);
+    color: white;
+    font-size: 60px;
+    .weui-input {
+      text-align: center;
+      &::placeholder {
+        font-size: 50px;
+      }
+    }
+    .amount {
+      font-size: 28px;
+      display: flex;
+      align-items: flex-end;
+      height: 60px;
+      justify-content: flex-end;
+    }
+  }
+  &__log {
+    padding: 28px;
+    background-color: #ffe7e9;
+    color: #888;
+    border-radius: 12px;
+    &-item {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    margin-bottom: 50px;
+  }
+  .weui-input::placeholder {
+    color: rgb(230, 230, 230);
+  }
+  &__footer {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 110px;
+    padding: 0 28px;
+    bottom: 0;
+    bottom: constant(safe-area-inset-bottom);
+    bottom: env(safe-area-inset-bottom);
+    left: 0;
+    background-color: #fff;
+    &-btn {
+      margin: 0;
+    }
+  }
+}

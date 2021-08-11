@@ -1,0 +1,17 @@
+.page-header {
+  position: relative;
+  display: flex;
+  height: 110px;
+  font-size: 40px;
+  align-items: center;
+  justify-content: center;
+  &__back {
+    position: absolute;
+    top: 0px;
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110px;
+  }
+}

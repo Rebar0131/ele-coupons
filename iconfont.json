@@ -1,0 +1,10 @@
+{
+    "symbol_url": "http://at.alicdn.com/t/font_2731593_lwgwch71b1.js",
+    "save_dir": "./src/components/iconfont",
+    "use_typescript": true,
+    "platforms": ["h5"],
+    "use_rpx": false,
+    "trim_icon_prefix": "icon",
+    "default_icon_size": 18,
+    "design_width": 750
+}
