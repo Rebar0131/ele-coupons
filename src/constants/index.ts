@@ -35,6 +35,19 @@ export const InitCoupons = [{
 
 export const QiXiCoupons = [{
   id: new Date().getTime(),
+  name: '搓澡服务',
+  startTime: dayjs().format("YYYY-MM-DD"),
+  endTime: dayjs().add(6, 'months').format("YYYY-MM-DD"),
+  status: ICouponsStatus.ON,
+  tag: '七夕礼',
+  count: 4,
+  amount: 4,
+  logs: [{
+    time: dayjs(),
+    type: IOperationType.CREATE,
+  }]
+}, {
+  id: new Date().getTime(),
   name: '按摩服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(6, 'months').format("YYYY-MM-DD"),
