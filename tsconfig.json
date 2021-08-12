@@ -22,6 +22,13 @@
       "node_modules/@types",
       "global.d.ts"
     ],
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "utils/*": ["./src/utils/*"],
+      "constants/*": ["./src/constants/*"],
+      "typings/*": ["./src/typings/*"],
+      "styles/*": ["./src/styles/*"]
+    }
   },
   "exclude": [
     "node_modules",

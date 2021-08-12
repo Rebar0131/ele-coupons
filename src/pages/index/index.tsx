@@ -1,10 +1,8 @@
-import { FC } from '@tarojs/taro'
-import { useState } from 'react'
+import Taro, { FC } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import dayjs from 'dayjs'
 
 import Love from '../../components/Love/Love'
-import List from '../components/List/List'
 
 import './index.scss'
 
@@ -20,10 +18,10 @@ const WeekName = {
 
 const Index: FC = () => {
 
-  const [loading, setLoading] = useState(true);
-
   setTimeout(() => {
-    setLoading(false);
+    Taro.redirectTo({
+      url: '/pages/coupons/list/list',
+    });
   }, 4100)
 
   console.log('To 燕程:')
@@ -41,12 +39,8 @@ const Index: FC = () => {
 
   return (
     <View className='index'>
-      { loading ? (
-        <View>
-          <Love />
-          <View className='loading-text'>燕程, {getName()}快乐哟~</View>
-        </View>
-      ) : <List />}
+      <Love />
+      <View className='loading-text'>燕程, {getName()}快乐哟~</View>
     </View>
   )
 }

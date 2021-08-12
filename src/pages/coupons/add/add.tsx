@@ -3,19 +3,14 @@ import { Button, Input, Picker, Text, Textarea, View } from "@tarojs/components"
 import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
 
-import PageHeader from "../../../components/PageHeader/PageHeader";
-import { setCouponsData } from "../../../utils/utils";
+// import PageHeader from "components/PageHeader/PageHeader";
+import { setCouponsData } from "utils/index";
+import events from 'utils/events';
 
-import './Add.scss';
-
-export interface IAddProps {
-  opened: boolean;
-  onCancel: () => void;
-}
+import './add.scss';
 
 const prefixClass = "coupons-add";
-const AddComponents: FC<IAddProps> = (props: IAddProps) => {
-  const { opened, onCancel } = props;
+const AddComponents: FC = () => {
   const [startTime, setStartTime] = useState(dayjs().format("YYYY-MM-DD"));
   const [endTime, setEndTime] = useState(dayjs().add(6, 'months').format("YYYY-MM-DD"));
   const [name, setName] = useState('');
@@ -25,7 +20,7 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
 
   useEffect(() => {
     handleClear()
-  }, [opened])
+  }, [])
 
   const handleNameChange = (e: any) => {
     setName(e?.detail?.value)
@@ -76,15 +71,16 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
         icon: 'none'
       })
     }
-    onCancel?.();
+    events.trigger('updateList', new Date())
+    Taro.navigateBack();
   }
 
-  if (!opened) {
-    return <></>
+  const handleCancel = () => {
+    Taro.navigateBack();
   }
-  console.log('endTime', endTime)
+
   return <View className={prefixClass}>
-    <PageHeader title='新增服务' backEvent={onCancel} />
+    {/* <PageHeader title='新增服务' /> */}
     <View className={`${prefixClass}__content`}>
       <View className={`${prefixClass}__header`}>
         <View className={`${prefixClass}__att`}>
@@ -117,7 +113,7 @@ const AddComponents: FC<IAddProps> = (props: IAddProps) => {
       </View>
     </View>
     <View className={`${prefixClass}__footer`}>
-      <Button className={`${prefixClass}__footer-btn`} onClick={onCancel}>取消</Button>
+      <Button className={`${prefixClass}__footer-btn`} onClick={handleCancel}>取消</Button>
       <Button style={{ marginLeft: '12px' }} className={`${prefixClass}__footer-btn`} type='primary' onClick={handleConfirm}>确定</Button>
     </View>
   </View>

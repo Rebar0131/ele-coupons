@@ -1,3 +1,5 @@
+@import './src/styles/variables.scss';
+
 .coupons-list {
   position: relative;
   overflow: hidden;
@@ -17,8 +19,8 @@
       padding: 12px 0;
       text-align: center;
       &--active {
-        color: rgb(207, 105, 112);
-        border-bottom: 1px solid rgb(207, 105, 112);
+        color: $color-brand;
+        border-bottom: 1px solid $color-brand;
       }
     }
   }
@@ -65,7 +67,7 @@
         height: 12px;
         margin-right: 12px;
         border-radius: 50%;
-        background-color: rgb(207, 105, 112);
+        background-color: $color-brand;
       }
     }
     &-tag {
@@ -79,6 +81,7 @@
       transform: rotate(-30deg);
       border-radius: 40%;
       text-align: center;
+      color: #fff;
       background-image: linear-gradient(58deg, #fcd1d16e 28%, #f40505 85%)
     }
     &-text {
@@ -107,8 +110,8 @@
     align-items: center;
     justify-content: center;
     font-size: 28px;
-    color: #888;
-    background-color: #f7e3e6;
+    color: #fff;
+    background-color: $color-brand-light;
     border-radius: 12px;
   }
 }

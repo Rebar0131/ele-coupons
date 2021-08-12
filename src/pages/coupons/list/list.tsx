@@ -1,21 +1,31 @@
+import Taro from '@tarojs/taro';
 import { Button, Text, View } from "@tarojs/components";
 import dayjs from "dayjs";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
-import IconFont from "../../../components/iconfont/h5";
-import { getCouponsData } from "../../../utils/utils";
-import { ICouponsStatus, ICoupon } from "../../..//typings";
-import AddComponents from "../Add/Add";
-import CouponsDetail from "../Detail/Detail";
+import IconFont from "components/iconfont/h5";
+import { getCouponsData } from "utils/index";
+import { ICouponsStatus, ICoupon } from "typings/index";
+import events from 'utils/events';
 
-import "./List.scss";
+import "./list.scss";
 
 const prefixClass = "coupons-list";
 const List: FC = () => {
   const [tab, setTab] = useState(ICouponsStatus.ON);
-  const [openAdd, setOpenAdd] = useState<boolean>(false);
-  const [openDetail, setOpenDetail] = useState<boolean>(false);
-  const [curItem, setCurItem] = useState<ICoupon>();
+  const [coupons, setCoupons] = useState<ICoupon[]>([]);
+
+  useEffect(() => {
+    const data = getCouponsData(tab);
+    setCoupons(data);
+  }, [tab]);
+
+  // 监听一个事件，接受参数
+  events.on('updateList', (arg) => {
+    console.log('updateList time', arg?.[0])
+    const data = getCouponsData(tab);
+    setCoupons(data);
+  })
 
   const handleSwitchTab = () => {
     tab === ICouponsStatus.ON ? setTab(ICouponsStatus.OFF) : setTab(ICouponsStatus.ON);
@@ -26,7 +36,7 @@ const List: FC = () => {
     }
     return `${prefixClass}__tab-item`;
   }
-  const couponsClassName = (status) => {
+  const couponsClassName = (status, index) => {
     if (status === ICouponsStatus.OFF) {
       return `${prefixClass}__item ${prefixClass}__item--off`;
     }
@@ -34,12 +44,15 @@ const List: FC = () => {
   }
 
   const openAddPage = () => {
-    setOpenAdd(true);
+    Taro.navigateTo({
+      url: `/pages/coupons/add/add`,
+    })
   }
 
   const handleClick = (item: ICoupon) => {
-    setCurItem(item)
-    setOpenDetail(true);
+    Taro.navigateTo({
+      url: `/pages/coupons/detail/detail?id=${item.id}`,
+    })
   }
 
   return (
@@ -50,8 +63,8 @@ const List: FC = () => {
       </View>
       <View className={`${prefixClass}__content`}>
         <View className={`${prefixClass}__list`}>
-          {getCouponsData(tab)?.length > 0 ? getCouponsData(tab)?.map((item) => (
-            <View key={item.id} className={couponsClassName(item.status)} onClick={() => handleClick(item)}>
+          {coupons?.length > 0 ? coupons?.map((item, index) => (
+            <View key={item.id} className={couponsClassName(item.status, index)} onClick={() => handleClick(item)}>
               {item?.tag && <View className={`${prefixClass}__item-tag`}>{item.tag}</View>}
               <View className={`${prefixClass}__item-name`}>{item.name}</View>
               {item.desc && <View className={`${prefixClass}__item-desc`}>{item.desc}</View>}
@@ -75,8 +88,6 @@ const List: FC = () => {
           </Button>
         </View>
       )}
-      <AddComponents opened={openAdd} onCancel={() => { setOpenAdd(false) }} />
-      <CouponsDetail opened={openDetail} item={curItem} onCancel={() => { setOpenDetail(false) }} />
     </View>
   )
 };

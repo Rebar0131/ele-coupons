@@ -1,3 +1,5 @@
+import { resolve } from 'path';
+
 const config = {
   projectName: 'ele-coupons',
   date: '2021-8-9',
@@ -17,6 +19,13 @@ const config = {
     ],
     options: {
     }
+  },
+  alias: {
+    'components': resolve(__dirname, '..', 'src/components'),
+    'utils': resolve(__dirname, '..', 'src/utils'),
+    'constants': resolve(__dirname, '..', 'src/constants'),
+    'typings': resolve(__dirname, '..', 'src/typings'),
+    'styles': resolve(__dirname, '..', 'src/styles'),
   },
   framework: 'react',
   mini: {
@@ -62,7 +71,7 @@ const config = {
   }
 }
 
-module.exports = function (merge) {
+export default function (merge) {
   if (process.env.NODE_ENV === 'development') {
     return merge({}, config, require('./dev'))
   }

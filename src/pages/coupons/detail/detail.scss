@@ -1,3 +1,5 @@
+@import './src/styles/variables.scss';
+
 .coupons-detail {
   z-index: 9;
   position: fixed;
@@ -16,18 +18,18 @@
   }
   &__header {
     padding: 28px;
-    background-color: rgb(250, 211, 214);
+    background-color: $color-brand-light;
     border-radius: 8px;
   }
   &__att {
     display: flex;
     font-size: 30px;
     margin-bottom: 20px;
-    color: #666;
+    color: #888;
 
     &-name {
       flex: 0 0 200px;
-      color: #333;
+      color: #666;
     }
   }
   &__count {
@@ -45,7 +47,7 @@
     width: 180px;
     height: 180px;
     border-radius: 50%;
-    background-color: rgb(231, 132, 139);
+    background-color: $color-brand;
     color: white;
     font-size: 60px;
     .weui-input {
@@ -64,7 +66,7 @@
   }
   &__log {
     padding: 28px;
-    background-color: #ffe7e9;
+    background-color: $color-brand-light;
     color: #888;
     border-radius: 12px;
     &-item {

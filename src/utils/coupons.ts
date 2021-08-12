@@ -133,3 +133,10 @@ export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
   }
   return !isNil(status) ? coupons?.filter(item => item.status === status)?.reverse() : coupons?.reverse();
 }
+
+/** 获取电子券 */
+export const getCoupon = (id: number | string): ICoupon => {
+  const coupons = Taro.getStorageSync('coupons');
+
+  return coupons.find((coupon) => coupon.id === Number(id));
+}
