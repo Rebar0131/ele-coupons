@@ -17,7 +17,7 @@ export const InitCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime(),
+  id: new Date().getTime() + 1,
   name: '做饭服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, 'months').format("YYYY-MM-DD"),
@@ -47,7 +47,7 @@ export const QiXiCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime(),
+  id: new Date().getTime() + 1,
   name: '按摩服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(6, 'months').format("YYYY-MM-DD"),
@@ -61,7 +61,7 @@ export const QiXiCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime(),
+  id: new Date().getTime() + 2,
   name: '做饭服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(6, 'months').format("YYYY-MM-DD"),
@@ -75,7 +75,7 @@ export const QiXiCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime(),
+  id: new Date().getTime() + 3,
   name: '逛街服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, 'year').format("YYYY-MM-DD"),
@@ -89,7 +89,7 @@ export const QiXiCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime(),
+  id: new Date().getTime() + 4,
   name: '拒绝卡',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, 'year').format("YYYY-MM-DD"),
@@ -103,7 +103,7 @@ export const QiXiCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime(),
+  id: new Date().getTime() + 5,
   name: '任意卡',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, 'year').format("YYYY-MM-DD"),

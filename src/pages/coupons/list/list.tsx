@@ -40,7 +40,6 @@ const List: FC = () => {
   const couponsClassName = (status, index) => {
     return classNames(`${prefixClass}__item`, {
       [`${prefixClass}__item--off`]: status === ICouponsStatus.OFF,
-      [`${prefixClass}__item--off--even`]: status === ICouponsStatus.OFF && index % 2 !== 0,
       [`${prefixClass}__item--even`]: status !== ICouponsStatus.OFF && index % 2 !== 0,
     });
   }
@@ -56,7 +55,7 @@ const List: FC = () => {
       url: `/pages/coupons/detail/detail?id=${item.id}`,
     })
   }
-
+  console.log('xxcoupons', coupons)
   return (
     <View className={prefixClass}>
       <View className={`${prefixClass}__tab`} style={{ backgroundColor: 'rgb(255 255 255 / 0.5)' }}>
