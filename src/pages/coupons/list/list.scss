@@ -39,13 +39,30 @@
     margin-bottom: 20px;
     padding: 28px;
     font-size: 28px;
-    background-color: rgb(245 222 224);
+    background-color: #f1d2d5;
     border-radius: 8px;
 
     &--off {
       background-color: #f8f8f8;
       .coupons-list__item-tag {
         background-image: linear-gradient(58deg, #fff0f6 28%, #ec414c 85%);
+      }
+      &--even {
+        background-color: #f8f8f8e8;
+      }
+    }
+
+    &--even {
+      background-color: #ffafb6;
+      color: #fff;
+      .coupons-list__item {
+        &-desc, &-text {
+          color: #fff;
+        }
+      }
+      .coupons-list__item-tag {
+        background-image: linear-gradient(58deg, #fff0f6 28%, #F5E79D 85%);
+        color: #888;
       }
     }
 

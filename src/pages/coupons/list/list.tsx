@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Taro from '@tarojs/taro';
 import { Button, Text, View } from "@tarojs/components";
 import dayjs from "dayjs";
@@ -37,10 +38,11 @@ const List: FC = () => {
     return `${prefixClass}__tab-item`;
   }
   const couponsClassName = (status, index) => {
-    if (status === ICouponsStatus.OFF) {
-      return `${prefixClass}__item ${prefixClass}__item--off`;
-    }
-    return `${prefixClass}__item`;
+    return classNames(`${prefixClass}__item`, {
+      [`${prefixClass}__item--off`]: status === ICouponsStatus.OFF,
+      [`${prefixClass}__item--off--even`]: status === ICouponsStatus.OFF && index % 2 !== 0,
+      [`${prefixClass}__item--even`]: status !== ICouponsStatus.OFF && index % 2 !== 0,
+    });
   }
 
   const openAddPage = () => {

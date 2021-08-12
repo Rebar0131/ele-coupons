@@ -110,8 +110,8 @@ export const QiXiCoupons = [{
   status: ICouponsStatus.ON,
   tag: '七夕礼',
   desc: '可做当下指定的任意一件事~',
-  count: 4,
-  amount: 4,
+  count: 3,
+  amount: 3,
   logs: [{
     time: dayjs(),
     type: IOperationType.CREATE,
