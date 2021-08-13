@@ -5,4 +5,7 @@
   taro-button-core[type=primary]:not([disabled]):active {
     background-color: rgb(175, 79, 85);
   }
+  taro-button-core:after {
+    border: none
+  }
 }

@@ -18,18 +18,18 @@
   }
   &__header {
     padding: 28px;
-    background-color: $color-brand-light;
+    background-color: $color-pink;
     border-radius: 8px;
   }
   &__att {
     display: flex;
     font-size: 30px;
     margin-bottom: 20px;
-    color: #888;
+    color: #fefefe;
 
     &-name {
       flex: 0 0 200px;
-      color: #666;
+      color: #fff;
     }
   }
   &__count {
@@ -67,7 +67,7 @@
   &__log {
     padding: 28px;
     background-color: $color-brand-light;
-    color: #888;
+    color: #fff;
     border-radius: 12px;
     &-item {
       font-size: 28px;
