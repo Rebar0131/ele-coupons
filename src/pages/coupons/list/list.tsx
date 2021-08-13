@@ -64,7 +64,7 @@ const List: FC = () => {
       <View className={`${prefixClass}__content`}>
         <View className={`${prefixClass}__list`}>
           {coupons?.length > 0 ? coupons?.map((item, index) => (
-            <View key={item.id} className={couponsClassName(item.status, index)} onClick={() => handleClick(item)}>
+            <View key={`${item.id}-${index}`} className={couponsClassName(item.status, index)} onClick={() => handleClick(item)}>
               {item?.tag && <View className={`${prefixClass}__item-tag`}>{item.tag}</View>}
               <View className={`${prefixClass}__item-name`}>{item.name}</View>
               {item.desc && <View className={`${prefixClass}__item-desc`}>{item.desc}</View>}
