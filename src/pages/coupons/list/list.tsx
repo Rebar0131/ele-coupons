@@ -23,7 +23,6 @@ const List: FC = () => {
 
   // 监听一个事件，接受参数
   events.on('updateList', (arg) => {
-    console.log('updateList time', arg?.[0])
     const data = getCouponsData(tab);
     setCoupons(data);
   })
@@ -55,7 +54,7 @@ const List: FC = () => {
       url: `/pages/coupons/detail/detail?id=${item.id}`,
     })
   }
-  console.log('xxcoupons', coupons)
+
   return (
     <View className={prefixClass}>
       <View className={`${prefixClass}__tab`} style={{ backgroundColor: 'rgb(255 255 255 / 0.5)' }}>
