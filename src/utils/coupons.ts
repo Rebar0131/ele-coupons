@@ -5,7 +5,8 @@ import { isNil } from 'lodash-es';
 import { InitCoupons, QiXiCoupons } from '../constants';
 import { ICoupon, ICouponsItemPrams, ICouponsStatus, ILog, IOperationType } from '../typings';
 
-const integer = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+// 正整数
+const integer = /^[1-9]\d*$/;
 
 export const updateCouponsData = (id: number, op: IOperationType) => {
   const coupons: ICoupon[] = Taro.getStorageSync('coupons') || [];
@@ -118,7 +119,7 @@ export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
   if (dayjs().startOf('day').valueOf() === dayjs('2021-08-14').valueOf()) {
     // id为创建时间
     const needFlag =
-      coupons.findIndex((item) => dayjs(item.id).startOf('day').valueOf() === dayjs('2021-08-14').valueOf() && item.tag !== '新人礼') === -1;
+      coupons.findIndex((item) => dayjs(item.id).startOf('day').valueOf() === dayjs('2021-08-14').valueOf() && item.tag !== '体验券') === -1;
 
     if (needFlag) {
       coupons = coupons.concat(QiXiCoupons)

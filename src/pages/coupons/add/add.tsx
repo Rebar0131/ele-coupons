@@ -52,7 +52,7 @@ const AddComponents: FC = () => {
     setTag('')
     setText('')
     setStartTime(dayjs().format("YYYY-MM-DD"))
-    setEndTime(dayjs().add(1, 'years').format("YYYY-MM-DD"))
+    setEndTime(dayjs().add(6, 'months').format("YYYY-MM-DD"))
   }
 
   const handleConfirm = () => {
@@ -89,11 +89,11 @@ const AddComponents: FC = () => {
         </View>
         <View className={`${prefixClass}__att`}>
           <Text className={`${prefixClass}__att-name`}>生效日期：</Text>
-          <Picker value={startTime} mode='date' onChange={handleDateChange}>
+          <Picker key='start-time-pick' value={startTime} mode='date' onChange={handleDateChange}>
             {startTime}
           </Picker>
           <Text> ~ </Text>
-          <Picker value={endTime} mode='date' onChange={handleEndDateChange}>
+          <Picker key='end-time-pick' value={endTime} mode='date' onChange={handleEndDateChange}>
             {endTime}
           </Picker>
         </View>
