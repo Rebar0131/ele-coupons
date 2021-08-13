@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { ICouponsStatus, IOperationType } from "../typings";
 
 export const InitCoupons = [{
-  id: new Date().getTime(),
+  id: new Date().getTime() + 6,
   name: '按摩服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, 'months').format("YYYY-MM-DD"),
@@ -17,7 +17,7 @@ export const InitCoupons = [{
     type: IOperationType.CREATE,
   }]
 }, {
-  id: new Date().getTime() + 1,
+  id: new Date().getTime() + 7,
   name: '做饭服务',
   startTime: dayjs().format("YYYY-MM-DD"),
   endTime: dayjs().add(1, 'months').format("YYYY-MM-DD"),
@@ -96,8 +96,8 @@ export const QiXiCoupons = [{
   status: ICouponsStatus.ON,
   tag: '七夕礼',
   desc: '可拒绝当下的任意一件事~',
-  count: 8,
-  amount: 8,
+  count: 6,
+  amount: 6,
   logs: [{
     time: dayjs(),
     type: IOperationType.CREATE,
