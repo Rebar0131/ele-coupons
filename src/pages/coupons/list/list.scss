@@ -29,7 +29,7 @@
     box-sizing: border-box;
     height: calc(100% - 112px);
     padding: 28px;
-    color: #666;
+    color: $color-text-pink;
   }
   &__item {
     position: relative;
@@ -45,7 +45,7 @@
     &--off {
       background-color: #f8f8f8;
       .coupons-list__item-tag {
-        background-image: linear-gradient(58deg, #fff0f6 28%, #ec414c 85%);
+        background-image: linear-gradient(58deg, #fff0f6 28%, #f6b1b5  85%);
       }
       &--even {
         background-color: #f8f8f8e8;
@@ -62,7 +62,7 @@
       }
       .coupons-list__item-tag {
         background-image: linear-gradient(58deg, #fff0f6 28%, #F5E79D 85%);
-        color: #888;
+        color: $color-text-light-pink;
       }
     }
 
@@ -75,7 +75,7 @@
       display: flex;
       align-items: center;
       margin-bottom: 12px;
-      color: #777;
+      color: $color-text-light-pink;
       width: 100%;
       &::before {
         display: block;
@@ -105,7 +105,7 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
-      color: #888;
+      color: $color-text-light-pink;
       font-size: 24px;
     }
   }
