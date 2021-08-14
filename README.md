@@ -7,6 +7,10 @@
 
 因写的仓促，有不少bug。 有空再优化
 
+### 效果页
+
+[http://rebar.restartai.com](http://rebar.restartai.com)
+
 ### 技术
 
 基于taro + 本地缓存
