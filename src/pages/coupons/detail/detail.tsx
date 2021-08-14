@@ -23,7 +23,7 @@ const CouponsDetail: FC = () => {
   useEffect(() => {
     if (params.id) {
       const coupon = getCoupon(params.id);
-      console.log('coupon', coupon)
+
       setItem(coupon);
       Taro.setNavigationBarTitle({
         title: coupon?.name,

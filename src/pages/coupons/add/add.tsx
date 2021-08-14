@@ -38,7 +38,6 @@ const AddComponents: FC = () => {
   }
 
   const handleTextChange = (e: any) => {
-    console.log('name', e)
     setText(e?.detail?.value)
   }
 
