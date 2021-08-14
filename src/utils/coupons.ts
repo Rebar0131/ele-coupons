@@ -50,7 +50,7 @@ export const updateCouponsData = (id: number, op: IOperationType) => {
 
 export const setCouponsData = (item: ICouponsItemPrams) => {
   let coupons = Taro.getStorageSync('coupons') || [];
-  console.log('coupons 2', coupons)
+
   if (!Array.isArray(coupons)) {
     coupons = [];
   }
@@ -67,7 +67,7 @@ export const setCouponsData = (item: ICouponsItemPrams) => {
     throw Error('数量请输入正整数')
   }
   if (item.tag && item.tag?.length > 4) {
-    throw Error('便签字数仅支持4位')
+    throw Error('标签仅支持4位哦')
   }
   coupons.push({
     id: new Date().getTime(),
@@ -84,7 +84,7 @@ export const setCouponsData = (item: ICouponsItemPrams) => {
       type: IOperationType.CREATE,
     }]
   })
-  console.log('coupons 4', coupons)
+
   Taro.setStorage({
     key: 'coupons',
     data: coupons,
@@ -94,7 +94,6 @@ export const setCouponsData = (item: ICouponsItemPrams) => {
 /** 获取电子券数据 */
 export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
   let coupons = Taro.getStorageSync('coupons');
-  console.log('coupons 1', coupons)
   let change = false;
 
   // 空数据时，初始化数据
@@ -135,7 +134,7 @@ export const getCouponsData = (status?: ICouponsStatus): ICoupon[] => {
       data: coupons,
     })
   }
-  console.log('coupons', coupons)
+
   return !isNil(status) ? coupons?.filter(item => item.status === status)?.reverse() : coupons?.reverse();
 }
 
